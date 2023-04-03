@@ -10,8 +10,8 @@ void sig_handler(int signum)
 	printf("%d done", signum);
 }
 
-static void int_handler()
-{
+static void
+int_handler() {
     printf("\n"); // Move to a new line
     rl_on_new_line(); // Regenerate the prompt on a newline
    // rl_replace_line(" ", 0); // Clear the previous text
@@ -25,8 +25,8 @@ void disable_veof(void)
 
     tcgetattr(STDIN_FILENO, &ori_settings);
     struct termios new_settings = ori_settings;
-    new_settings.c_cc[VEOF] = 4;
-	new_settings.c_cc[VINTR] = 3;
+    new_settings.c_cc[VEOF] = 3;
+	//new_settings.c_cc[VINTR] = 4;
 	
 	tcsetattr(STDIN_FILENO, TCSANOW, &new_settings);
 }
