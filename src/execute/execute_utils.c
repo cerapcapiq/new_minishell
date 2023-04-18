@@ -1,5 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/12 13:06:32 by abasarud          #+#    #+#             */
+/*   Updated: 2023/04/18 16:01:27 by abasarud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 #include "../libft/libft.h"
+
+char	*strremove(char *str, const char *sub)
+{
+	char	*p;
+	char	*q;
+	char	*r;
+	size_t	len;
+
+	if (*sub)
+	{
+		q = ft_strstr(str, sub);
+		r = q;
+		if (q != NULL)
+		{
+			len = strlen(sub);
+			while (r != NULL)
+			{
+				p = r + len;
+				r = ft_strstr(p, sub);
+				while (p < r)
+					*q++ = *p++;
+			}
+			while (*q != '\0')
+				*q++ = *p++;
+		}
+	}
+	return (str);
+}
 
 int	count_argc(char **args)
 {
@@ -31,6 +71,12 @@ void	call_pipe_redirect(t_mini *mini, t_token *command, t_token *tok)
 		tok = tok->next;
 		tok->type = ARG;
 		redirect_input(mini, tok);
+	}
+	else if (tok && tok->type == HEREDOC)
+	{	
+		tok = tok->next;
+		tok->type = ARG;
+		here_doc_input(tok, 0);
 	}
 }
 
