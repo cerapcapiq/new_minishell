@@ -14,21 +14,24 @@ BLUE		=	\033[0;94m
 WHITE		=	\033[0;97m
 
 BLT_DIR		=	builtin/
-BLT_FILES	=	echo pwd exit cd export_unset
+BLT_FILES	=	ft_echo ft_pwd ft_exit ft_cd export_unset ft_cd_utils
 EXECUTE_DIR	=	execute/
-EXECUTE_FILES	=	execute_utils execute_builtin execute_cmd execute env_var ft_var ft_add_var ft_env_var
+EXECUTE_FILES	=	execute_utils execute_builtin ft_execve execute 
 MAIN_DIR	=	main/
-MAIN_FILES	=	minishell signal
+MAIN_FILES	=	main signal
 PARSE_DIR	=	parse/
-PARSE_FILES	=	parser_utils parser pipe token redirection ft_dollar
+PARSE_FILES	=	parser pipe token redirection quote redirection_utils dollar
 FREE_DIR	=	free/
 FREE_FILES	=	mem_free
+ENV_DIR     =	env/
+ENV_FILES	=	env_var main_var new_var env_var_utils main_var_utils new_var_utils delete_var
 
 SRC_FILES	=	$(addprefix $(BLT_DIR), $(BLT_FILES))\
 					$(addprefix $(EXECUTE_DIR), $(EXECUTE_FILES))\
 					$(addprefix $(MAIN_DIR), $(MAIN_FILES))\
 					$(addprefix $(PARSE_DIR), $(PARSE_FILES))\
-					$(addprefix $(FREE_DIR), $(FREE_FILES))
+					$(addprefix $(FREE_DIR), $(FREE_FILES)) \
+					$(addprefix $(ENV_DIR), $(ENV_FILES))
 
 SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 
