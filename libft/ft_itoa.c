@@ -1,50 +1,67 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/12 12:49:28 by abasarud          #+#    #+#             */
+/*   Updated: 2023/04/12 12:49:28 by abasarud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
-#include <stdio.h>
 
-int		len(long nb)
+static int	ft_get_size(int n)
 {
-	int		len;
+	int	size;
 
-	len = 0;
-	if (nb < 0)
+	size = 0;
+	if (n <= 0)
+		size++;
+	while (n != 0)
 	{
-		nb = nb * -1;
-		len++;
+		n = n / 10;
+		size++;
 	}
-	while (nb > 0)
-	{
-		nb = nb / 10;
-		len++;
-	}
-	return (len);
+	return (size);
 }
 
-char	*ft_itoa(int nb)
+static void	ft_fill_res(int size, int offset, int n, char *res)
 {
-	char *str;
-	long	n;
-	int		i;
-
-	n = nb;
-	i = len(n);
-	if (!(str = (char*)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	str[i--] = '\0';
-	if (n == 0)
+	while (size > offset)
 	{
-		str[0] = 48;
-		return (str);
+		res[size - 1] = n % 10 + '0';
+		n = n / 10;
+		size--;
+	}
+}
+
+char	*ft_itoa(int n)
+{
+	int		offset;
+	int		size;
+	char	*res;
+
+	offset = 0;
+	size = ft_get_size(n);
+	res = (char *)malloc(sizeof(char) * size + 1);
+	if (!res)
+		return (0);
+	if (n == -2147483648)
+	{
+		res[0] = '-';
+		res[1] = '2';
+		n = 147483648;
+		offset = 2;
 	}
 	if (n < 0)
 	{
-		str[0] = '-';
-		n = n * -1;
+		res[0] = '-';
+		offset = 1;
+		n = -n;
 	}
-	while (n > 0)
-	{
-		str[i] = 48 + (n % 10);
-		n = n / 10;
-		i--;
-	}
-	return (str);
+	ft_fill_res(size, offset, n, res);
+	res[size] = '\0';
+	return (res);
 }

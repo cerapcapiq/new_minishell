@@ -50,6 +50,7 @@ FILES = ft_atoi \
 		ft_substr \
 		ft_tolower \
 		ft_toupper \
+		ft_split   \
 
 FILES_B = ft_lstnew \
 		  ft_lstadd_front \
