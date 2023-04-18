@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/12 13:15:54 by abasarud          #+#    #+#             */
+/*   Updated: 2023/04/18 14:11:03 by abasarud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 #include "../libft/libft.h"
 
@@ -32,96 +44,6 @@ int	delim_token(char *token)
 	return (0);
 }
 
-int	for_env(char *token)
-{
-	if (strstr(token, "="))
-	{
-		return (ENV);
-		printf("in able env\n");
-	}
-	return (0);
-}
-
-char	*ft_delete_quote(char *data)
-{
-	char	*new;
-	
-	new = ft_strdup(data);
-	new = strremove(new, "\"");
-	new = strremove(new, "\'");
-	return (new);
-}
-
-int	ft_single_detect_quote(char *data)
-{
-	char	*new;
-	
-	new = data;
-	while (*new != '\0')
-	{
-		if (*new == '\'' || *new != '\"')
-		{
-			for (int i = 0; i <= 4; i++)
-    		{
-    			int count = 1;
-        		for (int j = i + 1; new[j] != '\0'; j++)
-        		{
-        			if (new[i] == new[j])
-            		{
-            			count++;
-                		new[j] = -1;
-            		}
-        		}
-			if (count > 1 && new[i] != -1 && new[i] == '\"' && !ft_detect_dollar(new))
-       return (1);
-		if (count > 1 && new[i] != -1 && new[i] == '\'')
-        return (1);
-
-			}
-		}
-		else
-			return (0);
-	new++;
-	}
-	return (0);
-}
-
-int	ft_detect_quote(char *data)
-{
-	char *arg_letters = data;
- 	for (int i = 0, j = ft_strlen(arg_letters); i < j; i++)
-   {
-      for (int k = i+1; k < j; k++)
-      {
-         if (arg_letters[i] == arg_letters[k])
-         {
-			 if (arg_letters[i] == '\'' || arg_letters[i] == '\"')
-            return (1);
-         }
-
-      }
-   }
-   return (0);
-}
-
-int	ft_double_detect_quote(char *data)
-{
-	char *arg_letters = data;
- 	for (int i = 0, j = ft_strlen(arg_letters); i < j; i++)
-   {
-      for (int k = i+1; k < j; k++)
-      {
-         if (arg_letters[i] == arg_letters[k])
-         {
-			 if (arg_letters[i] == '\"')
-            return (1);
-         }
-
-      }
-   }
-   return (0);
-}
-
 //to get the token types from input
 int	token_type(t_mini *mini, char *token)
 {
@@ -145,28 +67,30 @@ int	token_type(t_mini *mini, char *token)
 	return (0);
 }
 
-//create new token list
 t_token	*new_token(t_mini *mini, char *data)
 {
 	t_token	*res;
-	char *new;
+	char	*new;
+	int		quote_type;
 
+	quote_type = 0;
 	res = (t_token *)malloc(sizeof(t_token));
-	if (ft_detect_quote(data))
-	{
-		new = ft_strdup(data);
-		res->str = ft_strdup(new);
-		res->type = ARG;
-		res->prev = 0;
-		res->next = 0;
-	}
+	if (detect_q(data))
+		quote_type = 1;
+	else if (ft_double_detect_quote(data))
+		quote_type = 2;
+	if (quote_type)
+		new = ft_delete_quote(data);
 	else
-	{
-	res->str = ft_strdup(data);
-	res->type = token_type(mini, data);
+		new = ft_strdup(data);
+	if (quote_type != 0)
+		res->type = ARG;
+	else
+		res->type = token_type(mini, data);
+	res->str = ft_strdup(new);
 	res->prev = 0;
 	res->next = 0;
-	}
+	res->quote = quote_type;
 	return (res);
 }
 
