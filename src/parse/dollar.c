@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:42:25 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/18 15:50:45 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/04/19 12:52:46 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,13 @@ int	ft_dollar(char *new)
 char	*ft_delete_quote(char *data)
 {
 	char	*new;
+	int		i;
+	int		len;
 
+	i = 0;
 	new = ft_strdup(data);
-	new = strremove(new, "\"");
-	new = strremove(new, "\'");
+	len = ft_strlen(new);
+	ft_memmove(&new[len - 1], &new[(len - 1) + 1], len - (len - 1));
+	ft_memmove(&new[0], &new[1], len - 0);
 	return (new);
 }
