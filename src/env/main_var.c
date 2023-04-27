@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:00:59 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/18 15:50:45 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/04/27 10:22:43 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ struct s_node	*del_path(char *now)
 		if (ft_strstr(s[i], "PATH"))
 		{
 			len = ft_strlen(s[i]);
-			memcpy(s[i], now, len);
+			ft_memcpy(s[i], now, len);
 			printf("%s\n [%d] \n", s[i], i);
 		}
 		i++;
@@ -61,8 +61,6 @@ void	ft_linked_list(char *cpy)
 	if (ft_strchr(cpy, '$') && !ft_strstr(cpy, "export $")
 		&& !ft_strstr(cpy, "export \"$"))
 		show_var(cpy, head_ref);
-	else if (!ft_strcmp(cpy, "env"))
-		display_s_node(head_ref);
 	else if (ft_strchr(cpy, '=') && !ft_detect_quote(cpy)
 		&& !ft_strstr(cpy, "export ") && !ft_strstr(cpy, "unset "))
 	{
