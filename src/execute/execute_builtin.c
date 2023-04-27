@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:06:35 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/18 12:20:09 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/04/27 10:22:44 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ int	call_builtin(char **argv, char *command, t_token token)
 		builtin_cmd = pwd();
 	else if (!ft_strcmp(command, "exit"))
 		builtin_cmd = mini_exit();
+	else if (!ft_strcmp(command, "env"))
+		display_s_node(head_ref);
+	g_info.exit_num = builtin_cmd;
 	return (builtin_cmd);
 }
 
