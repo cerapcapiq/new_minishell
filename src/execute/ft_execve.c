@@ -56,7 +56,7 @@ char	*ft_getpath(char **av)
 	return (NULL);
 }
 
-int	ft_ex(char **argv, char **envp, int i)
+/*int	ft_ex(char **argv, char **envp, int i)
 {
 	int	res;	
 	int	pid;
@@ -65,13 +65,49 @@ int	ft_ex(char **argv, char **envp, int i)
 	if (!pid)
 	{
 		argv[i] = 0;
-		execve(*argv, envp, ft_getenv());
-		return (printf("error"));
+		if (execve(*argv, envp, ft_getenv()) == -1)
+			perror("error");
 	}
-	if (waitpid(pid, &res, 0) == -1)
-		return (printf("error"));
+	waitpid(pid, &res, 0);
+		//return (printf("error"));
 	return (WIFEXITED(res) && WEXITSTATUS(res));
+}*/
+
+
+int	ft_ex(char **argv, char **envp, int i)
+{
+	int	res;	
+	int	pid;
+
+	pid = fork();
+	if (!pid)
+	{
+		argv[i] = NULL;
+		if (execve(*argv, envp, ft_getenv()) == -1)
+		{
+			perror("error");
+			exit(1);
+		}
+	}
+	else
+	{
+		while (waitpid(pid, &res, WNOHANG) == 0)
+			continue;
+		if (WIFEXITED(res))
+			return (WEXITSTATUS(res));
+		else
+			return (1);
+	}
+	return (0);
 }
+//In this modified version of ft_ex, the parent process waits for the child process to terminate using a loop that calls waitpid with the WNOHANG option. This ensures that the parent process collects the exit status of the child process as soon as it terminates, preventing the child process from becoming a zombie process. If the child process exits with an error status, the function returns 1 to indicate an error.
+
+
+
+
+
+
+
 
 int	call_cmd(char **av)
 {
