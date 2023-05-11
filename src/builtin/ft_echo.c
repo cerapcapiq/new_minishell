@@ -6,12 +6,13 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:00:06 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/02 12:50:36 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/11 13:01:30 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../libft/libft.h"
+#include <stdbool.h>
 
 void	print_echo_args(char **argv, int start)
 {
@@ -29,20 +30,6 @@ void	print_echo_args(char **argv, int start)
 	}
 }
 
-#include <stdbool.h>
-
-int has_dollar_sign(const char *str)
-{
-    const char *ptr = str;
-    while (*ptr != '\0')
-	{
-        if (*ptr == '$')
-            return 1;
-        ptr++;
-    }
-    return 0;
-}
-
 int	echo(int argc, char **argv, t_token curr)
 {
 	int	i;
@@ -57,23 +44,16 @@ int	echo(int argc, char **argv, t_token curr)
 		flag = 1;
 		i++;
 	}
-	if (curr.quote == 2 && ft_dollar(argv[i]))
+	if (curr.quote != 1 && ft_dollar(argv[i]))
 	{
 		argv[i] = ft_delete_quote(argv[i]);
 		if (ft_dollar(argv[i]))
 			argv[i] = strremove(argv[i], "$");
-		show_var(argv[i], head_ref);
-		printf("in here\n");
-	}
-	else if (curr.quote == 0)
-	{
-		if (ft_dollar(argv[i]))
+		if (!get_the_new_var(argv[i], head))
 		{
-			argv[i] = strremove(argv[i], "$");
-			show_var(argv[i], head_ref);
+			if (!show_var(argv[i], head_ref))
+				g_exit_num = 100;
 		}
-		else 
-			print_echo_args(argv, i);
 	}
 	else
 		print_echo_args(argv, i);
@@ -81,3 +61,45 @@ int	echo(int argc, char **argv, t_token curr)
 		printf("\n");
 	return (0);
 }
+
+/*int	echo(int argc, char **argv, t_token curr)
+{
+	int		flag;
+	char	*arg;
+	int		i;
+
+	if (argc < 2)
+		return (1);
+	flag = 0;
+	if (ft_strncmp(argv[1], "-n", 2) == 0)
+	{
+		flag = 1;
+		argv++;
+		argc--;
+	}
+	i = 1;
+	while (i < argc)
+	{
+		arg = argv[i];
+		if (curr.quote == 2 && ft_dollar(arg))
+		{
+			show_var(ft_delete_quote(strremove(arg, "$")), head_ref);
+			printf("in here\n");
+		}
+		else if (curr.quote == 0)
+		{
+			if (ft_dollar(arg))
+				show_var(strremove(arg, "$"), head_ref);
+			else
+				printf("%s", arg);
+			if (i < argc - 1)
+				printf(" ");
+		}
+		else
+			printf("%s", arg);
+		i++;
+	}
+	if (flag == 0)
+		printf("\n");
+	return (0);
+}*/
