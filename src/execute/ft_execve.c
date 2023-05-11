@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:06:29 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/18 13:41:21 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/11 12:55:59 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,23 @@ char	*ft_getpath(char **av)
 	int	res;	
 	int	pid;
 
+	res = 0;
 	pid = fork();
+	g_info.g_exit_num = 0;
 	if (!pid)
 	{
 		argv[i] = 0;
-		if (execve(*argv, envp, ft_getenv()) == -1)
-			perror("error");
+		execve(*argv, envp, ft_getenv());
+		ft_error_exit(10);
 	}
-	waitpid(pid, &res, 0);
-		//return (printf("error"));
+	if (waitpid(pid, &res, 0) == -1)
+		ft_error_exit(11);
+	wait(&res);
 	return (WIFEXITED(res) && WEXITSTATUS(res));
-}*/
-
-
+}
+*/
 int	ft_ex(char **argv, char **envp, int i)
-{
-	int	res;	
+{	
 	int	pid;
 
 	pid = fork();
@@ -85,29 +86,21 @@ int	ft_ex(char **argv, char **envp, int i)
 		argv[i] = NULL;
 		if (execve(*argv, envp, ft_getenv()) == -1)
 		{
-			perror("error");
+			g_exit_num = 55;
 			exit(1);
 		}
 	}
 	else
 	{
-		while (waitpid(pid, &res, WNOHANG) == 0)
-			continue;
-		if (WIFEXITED(res))
-			return (WEXITSTATUS(res));
+		while (waitpid(pid, &g_exit_num, WNOHANG) == 0)
+			continue ;
+		if (WIFEXITED(g_exit_num))
+			return (WEXITSTATUS(g_exit_num));
 		else
 			return (1);
 	}
 	return (0);
 }
-//In this modified version of ft_ex, the parent process waits for the child process to terminate using a loop that calls waitpid with the WNOHANG option. This ensures that the parent process collects the exit status of the child process as soon as it terminates, preventing the child process from becoming a zombie process. If the child process exits with an error status, the function returns 1 to indicate an error.
-
-
-
-
-
-
-
 
 int	call_cmd(char **av)
 {

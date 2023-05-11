@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:06:35 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/27 10:22:44 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/11 12:55:59 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ int	call_builtin(char **argv, char *command, t_token token)
 		builtin_cmd = echo(argc, argv, *token.next);
 	else if (!ft_strcmp(command, "pwd"))
 		builtin_cmd = pwd();
-	else if (!ft_strcmp(command, "exit"))
-		builtin_cmd = mini_exit();
 	else if (!ft_strcmp(command, "env"))
 		display_s_node(head_ref);
-	g_info.exit_num = builtin_cmd;
+	g_exit_num = builtin_cmd;
 	return (builtin_cmd);
 }
 
@@ -38,10 +36,10 @@ static	void	post_call(char **argv, char *command, t_mini *ms, int exit_code)
 	int	argc;
 
 	argc = count_argc(argv);
-	if (!ft_strcmp(command, "exit"))
-		mini_exit();
 	if (!ft_strcmp(command, "cd"))
 		cd(argc, argv);
+	else if (!ft_strcmp(command, "exit"))
+		mini_exit(argv);
 	ms->execute_code = exit_code;
 }
 
@@ -62,7 +60,7 @@ int	execute_builtin(char **argv, char *command, t_mini *ms)
 		post_call(argv, command, ms, exit_code);
 	}
 	else
-	{
+	{	
 		if (ms->pipe_write != -1)
 		{
 			close(ms->pipe_read);

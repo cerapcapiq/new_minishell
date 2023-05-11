@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:06:32 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/18 16:01:27 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/04/19 13:55:10 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*strremove(char *str, const char *sub)
 		r = q;
 		if (q != NULL)
 		{
-			len = strlen(sub);
+			len = ft_strlen(sub);
 			while (r != NULL)
 			{
 				p = r + len;

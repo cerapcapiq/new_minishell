@@ -6,13 +6,11 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:06:26 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/12 13:06:27 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/08 14:19:49 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-//calls the a propreate function to execute
 
 int	execute(t_mini *mini)
 {
@@ -35,5 +33,6 @@ int	execute(t_mini *mini)
 			mini->execute_code = call_cmd(argv);
 		agrv_free(argv);
 	}
+	wait(NULL);
 	return (0);
 }
