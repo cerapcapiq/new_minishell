@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:01:01 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/18 15:50:45 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/11 11:20:33 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*get_the_new_var(char *lineptr, struct s_linked *head)
 {
 	int					i;
 	char				*search;
+	char				*new;
 	struct s_linked		*temp;
 
 	i = 1;
@@ -28,7 +29,8 @@ char	*get_the_new_var(char *lineptr, struct s_linked *head)
 	{
 		if (ft_strstr(temp->data, search))
 		{
-			printf("$var saved is : %s\n", temp->data);
+			new = get_arg_content(temp->data);
+			printf("%s", new);
 			return (temp->data);
 		}
 		temp = temp->next;

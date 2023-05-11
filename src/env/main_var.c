@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:00:59 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/27 10:22:43 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:29:22 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_linked_list(char *cpy)
 		head = add_to_var(cpy, head);
 		display_linked_s_node(head);
 	}
-	ft_export(cpy);
+	else if (ft_strstr(cpy, "export "))
+		ft_export(cpy);
 	ft_unset(cpy);
 }

@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:01:05 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/12 13:01:33 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/11 11:18:03 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ struct s_node	*display_s_node(struct s_node *head_ref)
 	{
 		if (temp->nxtpointer == NULL)
 		{
-			printf(" %s->NULL\n", temp->data);
+			printf(" %s\nNULL", temp->data);
 		}
 		else
 		{
-			printf("\n%s->", temp->data);
+			printf("%s\n", temp->data);
 		}
 		temp = temp->nxtpointer;
 	}
@@ -65,26 +65,25 @@ void	get_arg(char *lineptr)
 		{
 			printf("error");
 		}
-		memcpy (after, arg, len + 1);
+		ft_memcpy (after, arg, len + 1);
 		printf ("the arg(value) is %s\n", arg);
 	}
 }
 
 char	*get_arg_content(char *lineptr)
 {
-	size_t	i;
-	char	*interesting_stuff;
+	int		i;
+	char	*value;
+	char	*new;
 
 	i = 0;
-	while (i < strlen(lineptr))
+	new = NULL;
+	value = ft_strstr(lineptr, "=");
+	if (value != NULL)
 	{
-		if (lineptr[i] == '=')
-		{
-			interesting_stuff = lineptr + i + 2;
-		}
-		i++;
+		new = value + 1;
 	}
-	return (interesting_stuff);
+	return (new);
 }
 
 struct s_node	*create_list(struct s_node **head_ref, char *lineptr)

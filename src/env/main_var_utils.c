@@ -6,18 +6,19 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:03:47 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/18 15:50:45 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/11 12:55:59 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../libft/libft.h"
 
-void	show_var(char *lineptr, struct s_node *head)
+int	show_var(char *lineptr, struct s_node *head)
 {
 	int				i;
 	char			*contact;
 	struct s_node	*temp;
+	char			*new;
 
 	i = 1;
 	if (*lineptr == '$')
@@ -25,15 +26,23 @@ void	show_var(char *lineptr, struct s_node *head)
 	get_name(lineptr);
 	contact = lineptr;
 	temp = head;
-	while (temp != NULL)
+	if (temp == NULL)
+		g_exit_num = 67;
+	else
 	{
-		if (ft_strstr(temp->data, contact))
+		while (temp != NULL)
 		{
-			printf("$var saved is : %s\n", temp->data);
+			if (ft_strstr(temp->data, contact))
+			{
+				new = get_arg_content(temp->data);
+				printf("%s", new);
+				return (0);
+			}
+			temp = temp->nxtpointer;
+			i++;
 		}
-		temp = temp->nxtpointer;
-		i++;
 	}
+	return (0);
 }
 
 char	*ft_var_content(char *lineptr, struct s_node *head)
@@ -63,11 +72,11 @@ char	*ft_var_content(char *lineptr, struct s_node *head)
 
 char	*get_arg_to_del(char *lineptr)
 {
-	size_t	i;
+	int		i;
 	char	*interesting_stuff;
 
 	i = 0;
-	while (i < strlen(lineptr))
+	while (i < ft_strlen(lineptr))
 	{
 		if (lineptr[i] == ' ')
 		{
