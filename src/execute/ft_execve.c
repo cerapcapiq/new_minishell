@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:06:29 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/11 12:55:59 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/18 17:33:10 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,41 +61,42 @@ char	*ft_getpath(char **av)
 	int	res;	
 	int	pid;
 
-	res = 0;
 	pid = fork();
-	g_info.g_exit_num = 0;
+	g_exit_num = 0;
 	if (!pid)
 	{
 		argv[i] = 0;
-		execve(*argv, envp, ft_getenv());
-		ft_error_exit(10);
+		if (execve(*argv, envp, ft_getenv()) == -1)
+			g_exit_num = 303;
 	}
-	if (waitpid(pid, &res, 0) == -1)
-		ft_error_exit(11);
-	wait(&res);
+	waitpid(pid, &res, 0);
 	return (WIFEXITED(res) && WEXITSTATUS(res));
 }
 */
 int	ft_ex(char **argv, char **envp, int i)
 {	
 	int	pid;
+	int res;
 
 	pid = fork();
 	if (!pid)
 	{
-		argv[i] = NULL;
+		argv[i] = 0;
 		if (execve(*argv, envp, ft_getenv()) == -1)
 		{
-			g_exit_num = 55;
+			perror("Error: command not found");
 			exit(1);
 		}
 	}
 	else
 	{
-		while (waitpid(pid, &g_exit_num, WNOHANG) == 0)
+		while (waitpid(pid, &res, WNOHANG) == 0)
 			continue ;
-		if (WIFEXITED(g_exit_num))
-			return (WEXITSTATUS(g_exit_num));
+		if (WIFEXITED(res))
+			{
+            g_exit_num = WEXITSTATUS(res);
+			//return (WEXITSTATUS(res));
+			}
 		else
 			return (1);
 	}
@@ -122,5 +123,6 @@ int	call_cmd(char **av)
 				break ;
 		}
 	}
+
 	return (j);
 }
