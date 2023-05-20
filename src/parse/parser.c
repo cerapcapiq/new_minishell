@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:15:41 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/16 15:49:59 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/18 17:04:24 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,50 +15,6 @@
 #include <histedit.h>
 #include <string.h>
 
-/*char** splitString(const char* input, int* tokenCount) {
-    const int maxTokens = 100;  // Maximum number of tokens
-    char** result = malloc(maxTokens * sizeof(char*));
-    char* current = malloc(strlen(input) + 1);
-    int currentIndex = 0;
-    int insideQuotes = 0;
-
-    for (int i = 0; input[i] != '\0'; i++) {
-        char c = input[i];
-
-        if (c == ' ' && !insideQuotes) {
-            if (currentIndex > 0) {
-                current[currentIndex] = '\0';
-                result[*tokenCount] = malloc(strlen(current) + 1);
-                strcpy(result[*tokenCount], current);
-                (*tokenCount)++;
-                currentIndex = 0;
-            }
-        } else if (c == '\"' || c == '\'') {
-            insideQuotes = !insideQuotes;
-        } else {
-            current[currentIndex] = c;
-            currentIndex++;
-        }
-    }
-
-    if (currentIndex > 0) {
-        current[currentIndex] = '\0';
-        result[*tokenCount] = malloc(strlen(current) + 1);
-        strcpy(result[*tokenCount], current);
-        (*tokenCount)++;
-    }
-
-    free(current);
-    return result;
-}
-
-void freeTokens(char** tokens, int tokenCount) {
-    for (int i = 0; i < tokenCount; i++) {
-        free(tokens[i]);
-    }
-    free(tokens);
-}
-*/
 char** split_string(const char* string) {
     int max_tokens = 100; // Maximum number of tokens
     int token_count = 0; // Current token count
@@ -163,7 +119,7 @@ char* add_spaces_around_pipe(const char* s)
 
     size_t j = 0;
     for (size_t i = 0; i < len; i++) {
-        if (s[i] == '|' && (i == 0 || s[i-1] != ' ') && (i == len - 1 || s[i+1] != ' ')) {
+        if (s[i] == '|' && ((i > 0 || s[i-1] != ' ') || (i < len - 1 || s[i+1] != ' '))) {
             result[j++] = ' ';
             result[j++] = '|';
             result[j++] = ' ';
@@ -176,12 +132,21 @@ char* add_spaces_around_pipe(const char* s)
     return result;
 }
 
+void exit_status()
+{
+char decimal_exit_status[20];
+
+    snprintf(decimal_exit_status, sizeof(decimal_exit_status), "%d", g_exit_num);
+    char command[256];
+    snprintf(command, sizeof(command), "expr %s", decimal_exit_status);
+}
+
 void	parse(t_mini *mini, char *buff)
 {
 	char	**split;
 	int		i;
 	t_token	*head = NULL;
-	char	*cpy;
+	char	*cpy = NULL;
 
 	split = NULL;
 	if (buff == NULL)
