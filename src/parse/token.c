@@ -6,12 +6,14 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:15:54 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/18 14:11:03 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/18 17:03:52 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../libft/libft.h"
+
+//int g_exit_num = 0;
 
 //get builtin command
 int	builtin_cmd(char *token)
@@ -44,9 +46,16 @@ int	delim_token(char *token)
 	return (0);
 }
 
-//to get the token types from input
 int	token_type(t_mini *mini, char *token)
 {
+	char	command[256];
+
+	if (!ft_strcmp(token, "$?"))
+	{
+		snprintf(command, sizeof(command), "%d", g_exit_num);
+		token = command;
+		return (ARG);
+	}
 	if (delim_token(token))
 	{
 		mini->cmd = 1;
