@@ -102,12 +102,13 @@ int	ft_strcmp(char *s1, char *s2)
 	return (*s1 - *s2);
 }
 
-void	ft_whitespace(char *buff)
+int	ft_whitespace(char *buff)
 {
 	while (*buff == '\t' || *buff == ' ' )
 		buff++;
-	if (*buff == '\0')
-		exit(0);
+	if (*buff == '\0' || ft_strlen(buff) == 0)
+        return 1;
+    return 0;
 }
 char* add_spaces_around_pipe(const char* s)
 {
@@ -154,7 +155,7 @@ void	parse(t_mini *mini, char *buff)
     buff = add_spaces_around_pipe(buff);
 	cpy = ft_strdup(buff);
 	ft_linked_list(cpy);
-	ft_whitespace(cpy);
+	//ft_whitespace(cpy);
 	split = ft_split(cpy, ' ');
 	head = new_token(mini, *split);
 	mini->tokens = head;
