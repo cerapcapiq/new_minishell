@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:14:55 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/12 13:14:56 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:28:54 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ char	*display_readline(char *input)
 static void	read_input(t_mini *mini, char *input)
 {
 	input = display_readline(input);
+	if (!ft_whitespace(input))
+	{
 	parse(mini, input);
 	add_history(input);
 	dup2(mini->stdin, STDIN_FILENO);
-	dup2(mini->stdout, STDOUT_FILENO);
+	dup2(mini->stdout, STDOUT_FILENO);}
 	free(input);
 }
 
@@ -63,6 +65,7 @@ int	main(int argc, char *argv[])
 	define_signal();
 	init_main(argc, argv);
 	mini = init_mini();
+	g_exit_num = 0;
 	head_ref = ft_link_env();
 	while (1)
 	{
