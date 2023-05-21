@@ -14,7 +14,7 @@ int	ft_strcmp(char *s1, char *s2)
 void	print_tokens(t_token *tokens)
 {
 	t_token	*curr;
-	
+
 	curr = tokens;
 	while (curr)
 	{

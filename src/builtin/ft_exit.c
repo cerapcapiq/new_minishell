@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:00:27 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/12 13:00:28 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:26:28 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	mini_exit(void)
+int	mini_exit()
 {
 	exit(0);
 }
