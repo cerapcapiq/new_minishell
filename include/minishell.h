@@ -92,6 +92,7 @@ struct s_linked
 //init signals, pipes etc
 
 extern char	**environ;
+int				g_exit_num;
 
 //parser
 char			*display_readline(char *input);
@@ -133,7 +134,7 @@ int				ft_ex(char **argv, char **envp, int i);
 //builtin_commands
 int				echo(int argc, char **argv, t_token curr);
 int				pwd(void);
-int				mini_exit(void);
+int				mini_exit(char **argv);
 int				cd(int argc, char **argv);
 void			ft_home_dir(void);
 void			ft_prev_dir(char *path);
@@ -149,7 +150,7 @@ char			*get_name(char *linestr);
 
 int				ft_var(char **argv);
 void			ft_add_back(char *cpy);
-void			show_var(char *lineptr, struct s_node *head);
+int			show_var(char *lineptr, struct s_node *head);
 char			*ft_var_content(char *lineptr, struct s_node *head);
 char			*get_arg_content(char *lineptr);
 char			*ft_add_var_content(char *lineptr, struct s_linked *head);
