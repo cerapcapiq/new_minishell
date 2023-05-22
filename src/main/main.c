@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:14:55 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/21 19:28:12 by gualee           ###   ########.fr       */
+/*   Updated: 2023/05/22 14:15:33 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*display_readline(char *input)
 static void	read_input(t_mini *mini, char *input)
 {
 	input = display_readline(input);
-	if (ft_whitespace(input))
+	if (!ft_whitespace(input))
 	{
 		parse(mini, input);
 		add_history(input);
