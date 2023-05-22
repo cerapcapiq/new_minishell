@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:15:45 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/21 18:25:18 by gualee           ###   ########.fr       */
+/*   Updated: 2023/05/22 14:13:10 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	handle_pipe_character(const char *s, size_t i, char **result, size_t *j);
 
 int	create_pipe(t_mini *mini)
 {
