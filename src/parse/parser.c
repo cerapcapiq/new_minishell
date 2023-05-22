@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:15:41 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/21 19:46:40 by gualee           ###   ########.fr       */
+/*   Updated: 2023/05/22 14:14:44 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 #include "../libft/libft.h"
 #include <histedit.h>
 #include <string.h>
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	while (*s1 && *s2 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
+}
+
 
 void	free_tokens(char **tokens, int tokenCount)
 {
@@ -62,7 +73,7 @@ void	parse(t_mini *mini, char *buff)
 	buff = add_spaces_around_pipe(buff);
 	cpy = ft_strdup(buff);
 	ft_linked_list(cpy);
-	ft_whitespace(cpy);
+	//ft_whitespace(cpy);
 	split = ft_split(cpy, ' ');
 	head = new_token(mini, *split);
 	mini->tokens = head;
