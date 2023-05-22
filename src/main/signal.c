@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:14:52 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/21 19:46:22 by gualee           ###   ########.fr       */
+/*   Updated: 2023/05/22 13:22:15 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	int_handler()
 {
 	printf("\n"); // Move to a new line
 	rl_on_new_line(); // Regenerate the prompt on a newline
-	rl_replace_line(" ", 0); // Clear the previous text
+//	rl_replace_line(" ", 0); // Clear the previous text
 	rl_redisplay();
 }
 
