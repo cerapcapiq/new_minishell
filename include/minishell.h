@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:48:55 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/18 15:53:38 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/22 13:17:42 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int				redirect_output(t_mini *ms, t_token *token, int type);
 int				redirect_input(t_mini *ms, t_token *token);
 void			parse(t_mini *mini, char *buff);
 char			*ft_strstr(char *str, const char *to_find);
+int				ft_whitespace(char *buff);
 
 struct s_node	*ft_link_env(void);
 struct s_node	*delete_var(char *lineptr, struct s_node *head_ref);
@@ -130,6 +131,8 @@ int				ft_clear_data(char *data);
 int				it_works(char *cmd_path);
 void			check_heredoc(char **argv);
 int				ft_ex(char **argv, char **envp, int i);
+
+char* add_spaces_around_pipe(const char* s);
 
 //builtin_commands
 int				echo(int argc, char **argv, t_token curr);
