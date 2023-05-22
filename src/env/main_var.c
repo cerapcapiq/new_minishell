@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:00:59 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/27 12:29:22 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/22 14:17:34 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ void	ft_add_back(char *cpy)
 
 void	ft_linked_list(char *cpy)
 {
-	if (ft_strchr(cpy, '$') && !ft_strstr(cpy, "export $")
-		&& !ft_strstr(cpy, "export \"$"))
-		show_var(cpy, head_ref);
-	else if (ft_strchr(cpy, '=') && !ft_detect_quote(cpy)
+	// if (ft_strchr(cpy, '=') && 
+	// !ft_strstr(cpy, "export $") && !ft_strstr(cpy, "export \"$"))
+	// 	show_var(cpy, head_ref);
+	 if (ft_strchr(cpy, '=') && !ft_detect_quote(cpy)
 		&& !ft_strstr(cpy, "export ") && !ft_strstr(cpy, "unset "))
 	{
 		head = add_to_var(cpy, head);
